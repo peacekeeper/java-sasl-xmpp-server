@@ -1,0 +1,30 @@
+admins = [
+    'admin@java-sasl-xmpp-server'
+]
+'config-type' = 'default'
+debug = [ 'server' ]
+'default-virtual-host' = 'java-sasl-xmpp-server'
+dataSource () {
+    default () {
+        uri = 'jdbc:derby:tigasedb;create=true'
+    }
+}
+ext () {}
+'ext-man' () {}
+http () {
+    setup () {
+        'admin-password' = 'tigase'
+        'admin-user' = 'admin@java-sasl-xmpp-server'
+    }
+}
+pubsub () {
+    trusted = [ 'http@{clusterNode}' ]
+}
+'sess-man' () {
+    'jabber:iq:last-marker' () {}
+    motd () {}
+    'sasl-provider' () {
+        customSaslFactory(class: sasl.did.mechanism.server.DidSaslServerFactory) {}
+        callback-handler-factory(class: demo.sasl.server.did.DidSaslServerCallbackHandler) {}
+    }
+}
