@@ -1,0 +1,34 @@
+services:
+  java-sasl-xmpp-server:
+    image: peacekeeper/java-sasl-xmpp-server:latest
+    restart: unless-stopped
+    hostname: java-sasl-xmpp-server
+    ports:
+      - "8080:8080" # for HTTP server (web-based setup, REST API, file upload extension, etc.)
+      - "5222:5222" # incoming client to server XMPP connections
+      - "5223:5223" # incoming client to server XMPP connections over TLS/SSL, including DirectTLS
+      - "5269:5269" # default s2s port, i.e.: federation support
+      - "5270:5270" # default external-component connection port
+      - "5277:5277" # inter-cluster communication
+      - "5280:5280" # default BOSH connections
+      - "5281:5281" # encrypted BOSH connections (over https)
+      - "5290:5290" # default WebSocket connectionsQ
+      - "5291:5291" # default WebSocket connections over TLS/SSL
+      - "9050:9050" # JMX Monitoring
+    volumes:
+      - ./tigase/etc:/home/tigase/tigase-server/etc
+      - ./tigase/data:/home/tigase/tigase-server/data
+      - ./tigase/logs:/home/tigase/tigase-server/logs
+      - ./tigase/certs:/home/tigase/tigase-server/certs
+      - ./tigase/tigasedb:/home/tigase/tigase-server/tigasedb
+    environment:
+      - DB_TYPE=derby
+      - DB_NAME=tigasedb
+      - DB_HOST=java-sasl-xmpp-server
+      - DB_ROOT_USER=admin
+      - DB_ROOT_PASS=tigase # if changed adjust db.environment.POSTGRES_PASSWORD value
+    #      - DEFAULT_VIRTUAL_DOMAIN= # (optional) set default VHost/domain of the installation (if not set, instance hostname will be used)
+    #      - ADMIN_JID # you can define admin-user credentials here and it will be creatd automatically (if not using setup and providing config.tdsl file manually)
+    #      - ADMIN_PASSWORD
+    #      - HTTP_API_KEY_BOOTSTRAP # optional, bootstrap HTTP component API-KEY
+    privileged: true
