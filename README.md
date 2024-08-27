@@ -15,6 +15,9 @@ The custom SASL mechanism and configuration has been added as described in https
   - https://github.com/peacekeeper/java-sasl-server-demo
 - The config.tdsl file has been configured to add the DID-based SASL authentication mechanism:
   - https://github.com/peacekeeper/java-sasl-xmpp-server/blob/main/resources/etc/config.tdsl
+- A custom Java Security Provider has been added that registers the DID-based SASL `SaslServerFactory` for the `DID-CHALLENGE` mechanism:
+  - https://github.com/peacekeeper/java-sasl-xmpp-server/blob/main/src/main/resources/META-INF/java.security.Provider
+  - https://github.com/peacekeeper/java-sasl-did-mechanism/blob/main/src/main/java/sasl/did/mechanism/DidSaslProvider.java
 
 ## Build
 
