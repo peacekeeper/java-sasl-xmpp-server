@@ -24,7 +24,7 @@ pubsub () {
     'jabber:iq:last-marker' () {}
     motd () {}
     'sasl-provider' () {
-        customSaslFactory(class: sasl.did.mechanism.server.DidSaslServerFactory) {}
+        customSaslFactory(class: sasl.mechanism.did.server.DIDChallengeSaslServerFactory) {}
         callback-handler-factory(class: demo.sasl.server.did.DidSaslServerCallbackHandler) {}
     }
 }
