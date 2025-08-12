@@ -1,6 +1,9 @@
 services:
   java-sasl-xmpp-server:
     image: peacekeeper/java-sasl-xmpp-server:latest
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
     restart: unless-stopped
     hostname: java-sasl-xmpp-server
     ports:
