@@ -1,11 +1,11 @@
 services:
   java-sasl-xmpp-server:
+    restart: unless-stopped
+    hostname: java-sasl-xmpp-server
     image: peacekeeper/java-sasl-xmpp-server:latest
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    restart: unless-stopped
-    hostname: java-sasl-xmpp-server
     ports:
       - "8080:8080" # for HTTP server (web-based setup, REST API, file upload extension, etc.)
       - "5222:5222" # incoming client to server XMPP connections
@@ -19,15 +19,15 @@ services:
       - "5291:5291" # default WebSocket connections over TLS/SSL
       - "9050:9050" # JMX Monitoring
     volumes:
-      - ./tigase/etc:/home/tigase/tigase-server/etc
-      - ./tigase/data:/home/tigase/tigase-server/data
-      - ./tigase/logs:/home/tigase/tigase-server/logs
       - ./tigase/certs:/home/tigase/tigase-server/certs
+      - ./tigase/data:/home/tigase/tigase-server/data
+      - ./tigase/etc:/home/tigase/tigase-server/etc
+      - ./tigase/logs:/home/tigase/tigase-server/logs
       - ./tigase/tigasedb:/home/tigase/tigase-server/tigasedb
     environment:
-      - DB_TYPE=derby
+      - DB_TYPE=postgresql
       - DB_NAME=tigasedb
-      - DB_HOST=java-sasl-xmpp-server
+      - DB_HOST=tigasedb
       - DB_ROOT_USER=admin
       - DB_ROOT_PASS=tigase # if changed adjust db.environment.POSTGRES_PASSWORD value
     #      - DEFAULT_VIRTUAL_DOMAIN= # (optional) set default VHost/domain of the installation (if not set, instance hostname will be used)
@@ -35,3 +35,12 @@ services:
     #      - ADMIN_PASSWORD
     #      - HTTP_API_KEY_BOOTSTRAP # optional, bootstrap HTTP component API-KEY
     privileged: true
+
+  tigasedb:
+    restart: always
+    hostname: tigasedb
+    image: postgres:14.1
+    environment:
+      POSTGRES_DB: tigasedb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: tigase

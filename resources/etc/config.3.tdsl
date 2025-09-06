@@ -1,14 +1,14 @@
-admins = [
-    'admin@java-sasl-xmpp-server'
-]
+admins = [ 'admin@java-sasl-xmpp-server' ]
 'config-type' = 'default'
 debug = [ 'server' ]
 'default-virtual-host' = 'java-sasl-xmpp-server'
-c2s/ports[i]=5222,5223
 dataSource () {
     default () {
         uri = 'jdbc:postgresql://tigasedb/tigasedb?user=tigase_user&password=tigase_pass'
     }
+}
+bosh (active: false) {
+    seeOtherHost {}
 }
 c2s {
     # Enable Stream Management bean
@@ -28,14 +28,17 @@ c2s {
 http () {
     setup () {
         'admin-password' = 'tigase'
-        'admin-user' = 'admin@java-sasl-xmpp-server'
+        'admin-user' = 'admin'
     }
 }
-pubsub () {
+'message-archive' (active: false) {}
+mix (active: false) {}
+muc (active: false) {}
+pubsub (active: false) {
     trusted = [ 'http@{clusterNode}' ]
 }
-'sess-man' () {
-    'sasl-provider' () {
-        customSaslFactory(class: sasl.mechanism.did.server.DIDChallengeSaslServerFactory) {}
-    }
+s2s (active: false) {}
+upload (active: false) {}
+ws2s (active: false) {
+    seeOtherHost {}
 }
