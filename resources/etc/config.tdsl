@@ -4,38 +4,27 @@ admins = [
 'config-type' = 'default'
 debug = [ 'server' ]
 'default-virtual-host' = 'java-sasl-xmpp-server'
-c2s/ports[i]=5222,5223
 dataSource () {
     default () {
         uri = 'jdbc:postgresql://tigasedb/tigasedb?user=tigase_user&password=tigase_pass'
     }
 }
-c2s {
-    # Enable Stream Management bean
-    'urn:xmpp:sm:3' () {}
-
-    # Register tigase.server.xmppclient.SeeOtherHostDualIP as seeOtherHost bean
-    seeOtherHost (class: tigase.server.xmppclient.SeeOtherHostDualIP) {}
-
-    # Add additional port 5224 which is SSL port and disable port 5223
-    connections () {
-        '5224' () {
-             socket = ssl
-          }
-        '5223' (active: false) {}
-    }
-}
+ext () {}
+'ext-man' () {}
 http () {
     setup () {
-        'admin-password' = 'tigase'
-        'admin-user' = 'admin@java-sasl-xmpp-server'
+        'admin-password' = 'setuppassword'
+        'admin-user' = 'setupusername'
     }
 }
 pubsub () {
     trusted = [ 'http@{clusterNode}' ]
 }
 'sess-man' () {
+    'jabber:iq:last-marker' () {}
+    motd () {}
     'sasl-provider' () {
         customSaslFactory(class: sasl.mechanism.did.server.DIDChallengeSaslServerFactory) {}
+        callback-handler-factory(class: sasl.xmpp.server.SaslServerCallbackHandler) {}
     }
 }

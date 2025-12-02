@@ -28,11 +28,11 @@ services:
       - DB_TYPE=postgresql
       - DB_NAME=tigasedb
       - DB_HOST=tigasedb
-      - DB_ROOT_USER=admin
-      - DB_ROOT_PASS=tigase # if changed adjust db.environment.POSTGRES_PASSWORD value
+      - DB_ROOT_USER=userdb
+      - DB_ROOT_PASS=passdb
+      - ADMIN_JID=adminjid@java-sasl-xmpp-server
+      - ADMIN_JID_PASS=adminpassword
     #      - DEFAULT_VIRTUAL_DOMAIN= # (optional) set default VHost/domain of the installation (if not set, instance hostname will be used)
-    #      - ADMIN_JID # you can define admin-user credentials here and it will be creatd automatically (if not using setup and providing config.tdsl file manually)
-    #      - ADMIN_PASSWORD
     #      - HTTP_API_KEY_BOOTSTRAP # optional, bootstrap HTTP component API-KEY
     privileged: true
 
@@ -42,5 +42,5 @@ services:
     image: postgres:14.1
     environment:
       POSTGRES_DB: tigasedb
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: tigase
+      POSTGRES_USER: userdb
+      POSTGRES_PASSWORD: passdb
