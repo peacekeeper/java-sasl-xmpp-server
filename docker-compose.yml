@@ -31,7 +31,7 @@ services:
       - DB_ROOT_USER=userdb
       - DB_ROOT_PASS=passdb
       - ADMIN_JID=adminjid@java-sasl-xmpp-server
-      - ADMIN_JID_PASS=adminpassword
+      - ADMIN_PASSWORD=adminpassword
     #      - DEFAULT_VIRTUAL_DOMAIN= # (optional) set default VHost/domain of the installation (if not set, instance hostname will be used)
     #      - HTTP_API_KEY_BOOTSTRAP # optional, bootstrap HTTP component API-KEY
     privileged: true

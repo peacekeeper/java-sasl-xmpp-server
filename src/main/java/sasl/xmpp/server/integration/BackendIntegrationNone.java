@@ -1,11 +1,11 @@
 package sasl.xmpp.server.integration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class BackendIntegrationNone implements BackendIntegration {
 
-    private static final Logger log = LogManager.getLogger(BackendIntegrationNone.class);
+    private static final Log log = LogFactory.getLog(BackendIntegrationNone.class);
 
     @Override
     public String checkName(String defaultName) {

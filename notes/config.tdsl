@@ -1,0 +1,15 @@
+'config-type' = 'setup'
+
+http () {
+    setup () {
+        'admin-user' = 'admin'
+        'admin-password' = 'tigase'
+    }
+}
+'sess-man' () {
+    'sasl-provider' () {
+        customSaslFactory(class: sasl.mechanism.did.server.DIDChallengeSaslServerFactory) {}
+        callback-handler-factory(class: sasl.xmpp.server.SaslServerCallbackHandler) {}
+        'mechanism-selector'(class: sasl.xmpp.server.SaslServerMechanismSelector) {}
+    }
+}

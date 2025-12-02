@@ -1,16 +1,16 @@
 package sasl.xmpp.server.integration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class BackendIntegrationWithDID implements BackendIntegration {
 
-    private static final Logger log = LogManager.getLogger(BackendIntegrationWithDID.class);
+    private static final Log log = LogFactory.getLog(BackendIntegrationWithDID.class);
 
     @Override
     public String checkName(String defaultName) {
         String checkedName = defaultName;
-        log.debug("checkName({}) --> {}", defaultName, checkedName);
+        log.debug("checkName(" + defaultName + ") --> " + checkedName);
         return checkedName;
     }
 

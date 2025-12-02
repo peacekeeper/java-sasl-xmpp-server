@@ -1,17 +1,21 @@
 package sasl.xmpp.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import sasl.mechanism.did.callback.JWKCallback;
 import sasl.xmpp.server.integration.BackendIntegration;
+import tigase.auth.CallbackHandlerFactory;
+import tigase.auth.callbacks.CallbackHandlerFactoryIfc;
+import tigase.db.NonAuthUserRepository;
+import tigase.xmpp.XMPPResourceConnection;
 
 import javax.security.auth.callback.*;
 import javax.security.sasl.AuthorizeCallback;
 import javax.security.sasl.RealmCallback;
 
-public class SaslServerCallbackHandler implements CallbackHandler {
+public class SaslServerCallbackHandler extends CallbackHandlerFactory implements CallbackHandler, CallbackHandlerFactoryIfc {
 
-    private static final Logger log = LogManager.getLogger(SaslServerCallbackHandler.class);
+    private static final Log log = LogFactory.getLog(SaslServerCallbackHandler.class);
 
     private final BackendIntegration backendIntegration;
 
@@ -20,33 +24,38 @@ public class SaslServerCallbackHandler implements CallbackHandler {
     }
 
     @Override
+    public CallbackHandler create(String mechanismName, XMPPResourceConnection session, NonAuthUserRepository repo) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        return super.create(mechanismName, session, repo);
+    }
+
+    @Override
     public void handle(Callback[] callbacks) throws UnsupportedCallbackException {
         for (Callback cb : callbacks) {
-            log.debug("-- SERVER CALLBACK: {}", cb.getClass().getSimpleName());
+            log.debug("-- SERVER CALLBACK: " + cb.getClass().getSimpleName());
             if (cb instanceof NameCallback nc) {
-                log.info(">S {} --- defaultName: {}, name: {}", nc.getPrompt(), nc.getDefaultName(), nc.getName());
+                log.info(">S " + nc.getPrompt() + " --- defaultName: " + nc.getDefaultName() + ", name: " + nc.getName());
                 nc.setName(this.getBackendIntegration().checkName(nc.getDefaultName()));
-                log.info("S> {} --- defaultName: {}, name: {}", nc.getPrompt(), nc.getDefaultName(), nc.getName());
+                log.info("S> " + nc.getPrompt() + " --- defaultName: " + nc.getDefaultName() + ", name: " + nc.getName());
             } else if (cb instanceof PasswordCallback pc) {
-                log.info(">S {} --- password: {}, isEchoOn: {}", pc.getPrompt(), pc.getPassword(), pc.isEchoOn());
+                log.info(">S " + pc.getPrompt() + " --- password: " + pc.getPassword() + ", isEchoOn: " + pc.isEchoOn());
                 pc.setPassword(this.getBackendIntegration().checkPassword(pc.getPassword()));
-                log.info("S> {} --- password: {}, isEchoOn: {}", pc.getPrompt(), pc.getPassword(), pc.isEchoOn());
+                log.info("S> " + pc.getPrompt() + " --- password: " + pc.getPassword() + ", isEchoOn: " + pc.isEchoOn());
             } else if (cb instanceof RealmCallback rc) {
-                log.info(">S {} --- defaultText: {}, text: {}", rc.getPrompt(), rc.getDefaultText(), rc.getText());
+                log.info(">S " + rc.getPrompt() + " --- defaultText: " + rc.getDefaultText() + ", text: " + rc.getText());
                 rc.setText(this.getBackendIntegration().checkTextInputRealm(rc.getDefaultText()));
-                log.info("S> {} --- defaultText: {}, text: {}", rc.getPrompt(), rc.getDefaultText(), rc.getText());
+                log.info("S> " + rc.getPrompt() + " --- defaultText: " + rc.getDefaultText() + ", text: " + rc.getText());
             } else if (cb instanceof JWKCallback rc) {
-                log.info(">S {} --- defaultText: {}, text: {}", rc.getPrompt(), rc.getDefaultText(), rc.getText());
+                log.info(">S " + rc.getPrompt() + " --- defaultText: " + rc.getDefaultText() + ", text: " + rc.getText());
                 rc.setText(this.getBackendIntegration().checkTextInputRealm(rc.getDefaultText()));
-                log.info("S> {} --- defaultText: {}, text: {}", rc.getPrompt(), rc.getDefaultText(), rc.getText());
+                log.info("S> " + rc.getPrompt() + " --- defaultText: " + rc.getDefaultText() + ", text: " + rc.getText());
             } else if (cb instanceof TextInputCallback tic) {
-                log.info(">S {} --- defaultText: {}, text: {}", tic.getPrompt(), tic.getDefaultText(), tic.getText());
+                log.info(">S " + tic.getPrompt() + " --- defaultText: " + tic.getDefaultText() + ", text: " + tic.getText());
                 tic.setText(this.getBackendIntegration().checkTextInput(tic.getDefaultText()));
-                log.info("S> {} --- defaultText: {}, text: {}", tic.getPrompt(), tic.getDefaultText(), tic.getText());
+                log.info("S> " + tic.getPrompt() + " --- defaultText: " + tic.getDefaultText() + ", text: " + tic.getText());
             } else if (cb instanceof AuthorizeCallback ac) {
-                log.info(">S --- authenticationID: {}, authorizationID: {}, authorizedID: {}, isAuthorized: {}", ac.getAuthenticationID(), ac.getAuthorizationID(), ac.getAuthorizedID(), ac.isAuthorized());
+                log.info(">S --- authenticationID: " + ac.getAuthenticationID() + ", authorizationID: " + ac.getAuthorizationID() + ", authorizedID: " + ac.getAuthorizedID() + ", isAuthorized: " + ac.isAuthorized());
                 ac.setAuthorized(true);
-                log.info("S> --- authenticationID: {}, authorizationID: {}, authorizedID: {}, isAuthorized: {}", ac.getAuthenticationID(), ac.getAuthorizationID(), ac.getAuthorizedID(), ac.isAuthorized());
+                log.info("S> --- authenticationID: " + ac.getAuthenticationID() + ", authorizationID: " + ac.getAuthorizationID() + ", authorizedID: " + ac.getAuthorizedID() + ", isAuthorized: " + ac.isAuthorized());
             } else {
                 throw new UnsupportedCallbackException(cb);
             }
