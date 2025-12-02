@@ -28,12 +28,6 @@ docker build -f ./docker/Dockerfile -t peacekeeper/java-sasl-xmpp-server .
 ## Run
 
 ```
-docker run -it -e 'DB_ROOT_USER=admin' -e 'DB_ROOT_PASS=tigase' -h java-sasl-xmpp-server -p 8080:8080 -p 5222:5222 -v ./tigase/etc/:/home/tigase/tigase-server/etc/ -v ./tigase/certs/:/home/tigase/tigase-server/certs/ -v ./tigase/data/:/home/tigase/tigase-server/data/ peacekeeper/java-sasl-xmpp-server:latest
-```
-
-or
-
-```
 docker compose up
 ```
 
