@@ -36,6 +36,14 @@ services:
     #      - HTTP_API_KEY_BOOTSTRAP # optional, bootstrap HTTP component API-KEY
     privileged: true
 
+  ngrok:
+    restart: always
+    hostname: ngrok
+    image: ngrok/ngrok:3.33.1-alpine
+    command: http java-sasl-xmpp-server:5222
+    environment:
+      - NGROK_AUTHTOKEN=1r45H8w3za6Zo3XAtHdcHHADxCE_84rvcXqC1W9ML5KQFMPWv
+
   tigasedb:
     restart: always
     hostname: tigasedb

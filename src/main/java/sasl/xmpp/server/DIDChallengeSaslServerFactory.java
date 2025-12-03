@@ -31,7 +31,7 @@ public class DIDChallengeSaslServerFactory extends TigaseSaslServerFactory {
     @Override
     public SaslServer createSaslServer(String mechanism, String protocol, String serverName, Map<String,?> props, CallbackHandler cbh) throws SaslException {
         log.info("createSaslServer: " + mechanism + ","  + protocol + "," + serverName + "," + props + "," + cbh);
-        if (mechanism == null || ! mechanism.equals(DIDChallengeSaslProvider.MECHANISM_NAME)) return null;
+        if (! DIDChallengeSaslProvider.MECHANISM_NAME.equals(mechanism)) return null;
         return new DIDChallengeSaslServer(protocol, serverName, props, cbh);
     }
 
