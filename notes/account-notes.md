@@ -29,3 +29,9 @@ Password: setuppassword
 
 alice@java-sasl-xmpp-server / alicepass
 bob@java-sasl-xmpp-server / bobpass
+
+=====================
+
+    <logger name="com.danubetech" level="DEBUG"/>
+    <logger name="demo.sasl" level="DEBUG"/>
+    <logger name="sasl.xmpp" level="DEBUG"/>

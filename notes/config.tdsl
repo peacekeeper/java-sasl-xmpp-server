@@ -9,7 +9,7 @@ http () {
 'sess-man' () {
     'sasl-provider' () {
         customSaslFactory(class: sasl.xmpp.server.DIDChallengeSaslServerFactory) {}
-        callback-handler-factory(class: sasl.xmpp.server.SaslServerCallbackHandler) {}
+        callback-handler-factory(class: sasl.xmpp.server.SaslServerCallbackHandlerFactory) {}
         'mechanism-selector'(class: sasl.xmpp.server.SaslServerMechanismSelector) {}
     }
 }
