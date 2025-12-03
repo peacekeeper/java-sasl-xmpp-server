@@ -11,7 +11,7 @@ http://java-sasl-xmpp-server:8080/
 
 Your XMPP (Jabber) default domain: java-sasl-xmpp-server
 Server administrators: admin@java-sasl-xmpp-server
-Admin password: admintigase
+Admin password: admin
 
 =====================
 
