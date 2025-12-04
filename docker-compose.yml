@@ -2,6 +2,7 @@ services:
   java-sasl-xmpp-server:
     restart: unless-stopped
     hostname: java-sasl-xmpp-server
+    container_name: java-sasl-xmpp-server
     image: peacekeeper/java-sasl-xmpp-server:latest
     build:
       context: .
@@ -39,6 +40,7 @@ services:
   tigasedb:
     restart: always
     hostname: tigasedb
+    container_name: tigasedb
     image: postgres:14.1
     environment:
       POSTGRES_DB: tigasedb

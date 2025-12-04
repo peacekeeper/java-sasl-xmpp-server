@@ -1,7 +1,7 @@
 package sasl.xmpp.server;
 
 import demo.sasl.server.SaslServerCallbackHandler;
-import demo.sasl.server.integration.BackendIntegrationWithDID;
+import demo.sasl.server.integration.BackendIntegrationDemoDID;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import sasl.mechanism.did.DIDChallengeSaslProvider;
@@ -20,7 +20,7 @@ public class SaslServerCallbackHandlerFactory extends CallbackHandlerFactory imp
     public CallbackHandler create(String mechanismName, XMPPResourceConnection session, NonAuthUserRepository repo) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         CallbackHandler result;
         if (DIDChallengeSaslProvider.MECHANISM_NAME.equals(mechanismName)) {
-            result = new SaslServerCallbackHandler(new BackendIntegrationWithDID());
+            result = new SaslServerCallbackHandler(new BackendIntegrationDemoDID());
         } else {
             result = super.create(mechanismName, session, repo);
         }

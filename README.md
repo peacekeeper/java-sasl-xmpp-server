@@ -22,13 +22,60 @@ The custom SASL mechanism and configuration has been added as described in https
 ## Build
 
 ```
-docker build -f ./docker/Dockerfile -t peacekeeper/java-sasl-xmpp-server .
+docker compose build
 ```
 
 ## Run
 
 ```
-docker compose up
+docker compose up -d
+```
+
+## Setup
+
+Go to http://localhost:8080/. Default HTTP Basic Authentication username/password is "admin" / "tigase".
+
+Follow the setup instructions.
+
+In the step "Installation of Tigase XMPP Server is almost finished", add the following configuration:
+
+```
+'sess-man' () {
+    'sasl-provider' () {
+        customSaslFactory(class: sasl.xmpp.server.DIDChallengeSaslServerFactory) {}
+        callback-handler-factory(class: sasl.xmpp.server.SaslServerCallbackHandlerFactory) {}
+        'mechanism-selector'(class: sasl.xmpp.server.SaslServerMechanismSelector) {}
+    }
+}
+```
+
+Save the configuration, then restart the server.
+
+```
+docker compose restart java-sasl-xmpp-server
+```
+
+## Watch logs
+
+```
+docker logs -f java-sasl-xmpp-server
+```
+
+## Create demo users and send messages
+
+Go to http://localhost:8080/dashboard/login. Log in with the admin JID and password you created during setup.
+
+Add users, e.g.:
+
+- "alice" / "alicepass"
+- "bob" / "bobpass"
+
+Go to http://localhost:8080/ui/. Log in with a user and try sending / receiving messages.
+
+## Stop
+
+```
+docker compose down
 ```
 
 ## About
