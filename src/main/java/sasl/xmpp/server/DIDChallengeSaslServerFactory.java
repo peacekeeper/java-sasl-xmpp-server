@@ -1,10 +1,10 @@
 package sasl.xmpp.server;
 
+import demo.sasl.server.debug.SaslServerDebug;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import sasl.mechanism.did.DIDChallengeSaslProvider;
 import sasl.mechanism.did.server.DIDChallengeSaslServer;
-import sasl.xmpp.server.debug.SaslServerDebug;
 import tigase.auth.TigaseSaslProvider;
 import tigase.auth.mechanisms.TigaseSaslServerFactory;
 import tigase.kernel.beans.Bean;
