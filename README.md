@@ -63,12 +63,13 @@ docker logs -f java-sasl-xmpp-server
 
 ## Create demo users and send messages
 
-Go to http://localhost:8080/dashboard/login. Log in with the admin JID and password you created during setup.
+Go to http://localhost:8080/dashboard/login. Log in with the admin JID (e.g. "admin@java-sasl-xmpp-server") and the password you created during setup.
 
 Add users, e.g.:
 
 - "alice" / "alicepass"
 - "bob" / "bobpass"
+- "did%3Akey%3Az6MkfePUhxLV6cM54cgZ4bGmnEdTNm3WDf4arwh5kR3dH51D" / "didpass"
 
 Go to http://localhost:8080/ui/. Log in with a user and try sending / receiving messages.
 
