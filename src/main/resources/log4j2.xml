@@ -28,7 +28,7 @@
 
 		<Logger name="demo.sasl.server" level="debug"/>
 		<Logger name="sasl.xmpp.server" level="debug"/>
-		<Logger name="sasl.did" level="debug"/>
+		<Logger name="sasl.mechanism.did" level="debug"/>
 	</Loggers>
 
 </Configuration>
