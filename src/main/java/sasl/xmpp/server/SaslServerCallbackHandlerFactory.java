@@ -14,7 +14,7 @@ import javax.security.auth.callback.CallbackHandler;
 
 public class SaslServerCallbackHandlerFactory extends CallbackHandlerFactory implements CallbackHandlerFactoryIfc {
 
-    private static final Log log = LogFactory.getLog(SaslServerCallbackHandler.class);
+    private static final Log log = LogFactory.getLog(SaslServerCallbackHandlerFactory.class);
 
     @Override
     public CallbackHandler create(String mechanismName, XMPPResourceConnection session, NonAuthUserRepository repo) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
